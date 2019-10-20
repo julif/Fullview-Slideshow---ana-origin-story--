@@ -1,0 +1,44 @@
+body{
+  padding: 0;
+  margin: 0;
+  background-color: white;
+}
+preloader {
+    margin-left: 15000px !important;
+    position: fixed !important;
+    display: block;
+}
+preloader img{ width: 150!important; }
+portrait{
+  background-color: rgb(166, 135, 102);
+  height: 100%; 
+}
+@media only screen and (orientation:landscape){
+  landscape{ display:block; }
+  portrait{ display:none; }
+}
+@media only screen and (orientation:portrait){
+  landscape{ display:none; }
+  portrait{ display:block; }
+}
+#contenedor{
+  background-color: white;
+  color: black;
+  height: 100vh;
+  width: 100%;
+}
+section{
+  height: 100vh;
+  width: 100%;
+}
+.flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #55557b;
+  font-family: 'Rubik', sans-serif;
+  font-size: 25px;
+}
+#splash{
+  background-color: #898681;
+}

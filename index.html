@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ana origin story</title>
+    <meta name="author" content="Julif - Julian Filardi -"><!-- Autor de la pagina -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width"/>
+    <!-- <script src="https://kit.fontawesome.com/83a06a6d8e.js" crossorigin="anonymous"></script> -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"> 
+  <!--   <link href="fontawesome-free-5.11.2-web/css/all.css" rel="stylesheet"> --> <!--load all styles -->
+    <!-- favicons -->
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+    <!-- javascript -->
+    <script src="js/idioma.js"></script>
+    <script src="js/responsive.js"></script>
+    <script src="js/lock.js"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="css/fullview.css"/>
+    <link rel="stylesheet" href="css/pre_splash.css"/>
+    <style>
+    imagen{
+      display: block;
+      background-color: black;
+      /*background-image: url("img/img1.png");*/
+      background-size: cover!important;
+      background-position: top!important;
+      height: 100vh;
+      -webkit-transition: all 0.8s ease-in-out 0s;
+      transition: all 0.8s ease-in-out 0s;
+      width: -moz-available;
+      width: -webkit-fill-available;
+    }
+    anterior, siguiente{ 
+      position: absolute;
+      top: 0px;
+      cursor: pointer;
+      /*background-color: black*/;
+      width: 10%;
+      display: block;
+      height: 100%;
+      opacity: 0.01;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      -webkit-transition: all 0.8s ease-in-out 0s;
+      transition: all 0.8s ease-in-out 0s;
+    } 
+    siguiente{ background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(0,0,0,0.76) 76%, rgba(0,0,0,1) 100%);right: 0; }
+    anterior{ background: linear-gradient(to left, rgba(255,255,255,0) 0%, rgba(0,0,0,0.76) 76%, rgba(0,0,0,1) 100%);left: 0; }
+    anterior i, siguiente i{font-size: 30px;}
+    anterior:hover, siguiente:hover{ opacity: 0.5;  }
+    .not_show:hover{ opacity: 0.01!important; cursor:auto; }
+    @media  (max-width: 700px) {
+      anterior:hover, siguiente:hover{ opacity: 0.01!important;  }
+    }
+    </style>
+  </head>
+  <body onkeydown="uniKeyCode(event)">
+    <section id="contenedor">
+      <div id="full">
+        <button id="fullwiev" onclick="lock('landscape')" >
+            <i class="fa fa-expand"></i>
+        </button>
+      </div>
+      <landscape>
+        <section id="pre_splash" >
+          <div class="loader">Loading...</div> 
+        </section><!-- pre-splash -->
+        <preloader id="preloader_splash" class="preloader">
+        </preloader><!-- preloader_splash -->
+         <section class="flex" id="splash" style="background-color: #a68766;display: none;">
+           <img src="img/ana_logo.png" style="height: 150px;">
+        </section><!-- splash -->
+        <preloader id="preloader_main" class="preloader" style="display: none;">
+        </preloader><!-- preloader_main -->
+        <section class="flex" id="main" style="background-color: black; display: none;"> 
+          <imagen id="imagen"></imagen>
+          <anterior  id="btn_anterior" onclick="anteriorImagen()"><i class="fas fa-angle-left"></i> </anterior>
+          <siguiente id="btn_siguiente" onclick="siguienteImagen()"><i class="fas fa-angle-right"></i></siguiente>
+        </section><!-- main -->
+      </landscape>
+      <portrait>
+        <section class="flex" style="color: black;text-align: center;background-color: rgb(166, 135, 102);">
+          <div style="display: grid;">
+            <img  src="img/rotate.png" style="margin: 0px auto;">
+            <div style="padding: 5px;"> Por favor rote su dispositivo a la orientación horizontal. </div> 
+          </div>
+        </section>
+      </portrait>
+    </section>
+  </body>
+  <script type="text/javascript">
+    document.getElementById("preloader_splash").innerHTML="<img onload=\"cargar_splash()\" src=\"img/ana_logo.png\">"; 
+  function cargar_splash() {
+    document.getElementById('splash').style.display="flex";
+    document.getElementById('preloader_main').style.display="flex";
+    document.getElementById('pre_splash').style.display="none";
+  }
+// var imagenes = ["<img onload=\"pre_cargar_main()\" src=\"img/"+ plataform +"/img1.png\" width=\"150\">"];
+var e;
+for (e = 1; e <= 14; e++) {
+  document.getElementById("preloader_main").innerHTML+="<img onload=\"pre_cargar_main()\" src=\"img/"+ plataform +"/img"+[e]+".png\">";
+} 
+
+
+   var i=0;
+    function pre_cargar_main(){
+      i++;
+      if (i== 14) { cargar_main();}
+    } 
+
+
+
+    function cargar_main(){
+      document.getElementById('splash').style.display="none";
+      document.getElementById('main').style.display="flex";
+    }
+  </script>
+  <script type="text/javascript">
+
+  var contador_imagen= 1;
+  var total_de_imagenes =14;
+
+
+
+ chequearImagen();
+  // --
+  not_show_first_and_last();
+    function not_show_first_and_last(){
+   if (contador_imagen == 1) { document.getElementById('btn_anterior').classList.add('not_show'); }
+   if (contador_imagen > 1) { document.getElementById('btn_anterior').classList.remove('not_show'); }
+   if (contador_imagen == total_de_imagenes) { document.getElementById('btn_siguiente').classList.add('not_show'); }
+   if (contador_imagen < total_de_imagenes) { document.getElementById('btn_siguiente').classList.remove('not_show'); }
+    }
+
+function anteriorImagen(){ 
+  if (contador_imagen > 1) {
+     contador_imagen--;
+     chequearImagen();
+     // document.getElementById('btn_anterior').classList.remove('not_show');
+  }
+   else{ contador_imagen = 1; }
+   // --
+   not_show_first_and_last();
+
+}
+
+function siguienteImagen(){ 
+ if (contador_imagen < total_de_imagenes) {
+     contador_imagen ++;
+     chequearImagen();
+  }
+  else{ contador_imagen = total_de_imagenes;}
+ // --
+   not_show_first_and_last();
+}
+function chequearImagen(){  
+  var ruta = "img/"+plataform+"/img"+contador_imagen+".png";
+  //document.getElementById("imagen")style.backgroundImage = 'url('+ruta+')'; 
+  document.getElementById('imagen').style.background = 'url('+ruta+')';
+  return;
+}
+</script> 
+<script type="text/javascript">
+  function uniKeyCode(event) {
+    var key = event.keyCode;
+    if (key==37) { anteriorImagen(); };
+    if (key==39) { siguienteImagen(); };
+  }
+</script>
+  <script src="js/swipe.js"></script>
+</html>
